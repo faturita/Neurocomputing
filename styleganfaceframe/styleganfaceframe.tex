@@ -1,0 +1,109 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
+
+\journal{Journal of \LaTeX\ Templates}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Elsevier bibliography styles
+%%%%%%%%%%%%%%%%%%%%%%%
+%% To change the style, put a % in front of the second line of the current style and
+%% remove the % from the second line of the style you would like to use.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Numbered
+%\bibliographystyle{model1-num-names}
+
+%% Numbered without titles
+%\bibliographystyle{model1a-num-names}
+
+%% Harvard
+%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Vancouver numbered
+%\usepackage{numcompress}\bibliographystyle{model3-num-names}
+
+%% Vancouver name/year
+%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
+
+%% APA style
+%\bibliographystyle{model5-names}\biboptions{authoryear}
+
+%% AMA style
+%\usepackage{numcompress}\bibliographystyle{model6-num-names}
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Controlling Face's Frame generation in StyleGAN's latent space operations}
+
+\author[ITBA]{Roca Agustín}
+\ead{aroca@itba.edu.ar}
+
+\author[ITBA]{Britos Nicolás Ignacio}
+\ead{nbritos@itba.edu.ar}
+
+\affiliation[ITBA]{organization={Instituto Tecnologico de Buenos Aires},
+city={Ciudad Autonoma de Buenos Aires},
+country={Argentina}}
+
+
+\begin{abstract}
+Some studies suggest that the face frame (the hairline, chin and ears), are more important 
+for face recognition than the inner facial features (eyes, mouth, nose), especially in 
+unfamiliar faces~\cite{want2003}. % TODO: incluir mas citas
+In this paper, we define a way to measure the difference of face frame
+between two face images, and use that to implement a better preservation of the face frame 
+in the main StyleGAN~\cite{stylegan2} latent space operations (moving through latent directions and 
+projection). With the tested images, an additional preservation between 20\% and 50\% was % TODO: Capaz podriamos implementar para direcciones también
+obtained for the projection. This can be used to make the faces resulting from these operations
+similar to their input. 
+\end{abstract}
+
+\begin{keyword}
+StyleGAN, Generative adversarial network, Latent space, Image generation, Image Segmentation, Image Processing, Face frame
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{Introduction}
+
+% TODO: Expand on memories studies results, neural networks to solve this kind of problems
+% StyleGAN2 impact especially, contributions of this work, applications where this can be useful
+% importance of exploring the latent space
+
+\section{Materials and Methods}
+
+% TODO: Expand on how to measure face frame difference, including the segmentation of the face.
+% Expand on the correction of face frame in the projection operation, and maybe in the directions too.
+
+\section{Results} \label{Results}
+\label{section:results}
+
+% TODO: Show graphs of face frame difference moving through directions, and when projecting with vs without correction
+
+
+\section{Discussion}
+\label{discussion}
+
+% TODO: Interpretation of results, limitations
+
+\section{Conclusions}
+
+% TODO: Closure, summary of main takeaways of the paper
+
+\bibliography{styleganfaceframe}
+
+\end{document}
