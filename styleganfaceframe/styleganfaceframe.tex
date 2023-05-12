@@ -78,23 +78,43 @@ StyleGAN, Generative adversarial network, Latent space, Face frame, Image editin
 \section{Introduction}
 
 Recognizing faces is a fundamental ability for humans, but it's a complex task that depends on various factors. According to several studies, features such as the outer contour of the face, ears, chin, and hairline can significantly affect how we perceive and remember a person's face~\cite{want2003} % TODO: more cites
-. These set of features, is what we refer to as the face frame. 
+. These set of features, is what we refer to as the face frame. MAS CITAS TAL CUAL.
 
-Preserving the face frame has important implications for various face editing applications, such as face swapping, face aging, and virtual makeup. In these applications, the goal is to modify the appearance of a face while keeping its identity intact, or to generate a new face that looks similar to a given face. The face frame plays a crucial role in these tasks, as it provides a stable reference for the overall shape and proportions of the face. If the face frame is lost or distorted during the editing process, the resulting face may look unrealistic or unrecognizable, which can limit the usability and appeal of the application. By preserving the face frame when generating or manipulating faces, we can ensure that the edited faces retain their identity and resemblance to the original faces, which can enhance the user experience and the realism of the results.
+Preserving the face frame has important implications for various face generation and editing applications, such as face swapping, face aging, and virtual makeup. 
 
-There are many image editors applications that are investing in artificial intelligence to achieve better results in their editing tools. %cite
+ACA LLEVA EL TEMA DE LA RAZON DE ESTE PROYECTO QUE ES MUY IMPORTANTE POR EL IMPACTO QUE TIENE.   ACA TENES QUE PONER UN RESUMEN DE INNOCENT PROJECT Y LA RAZON POR LA QUE SE QUIERE DISPONER DE ESTA HERRAMIENTA.
+
+In these applications, the goal is to modify the appearance of a face while keeping its identity intact, or to generate a new face that looks similar to a given face. The face frame plays a crucial role in these tasks, as it provides a stable reference for the overall shape and proportions of the face. If the face frame is lost or distorted during the editing process, the resulting face may look unrealistic or unrecognizable, which can limit the usability and appeal of the application. By preserving the face frame when generating or manipulating faces, we can ensure that the edited faces retain their identity and resemblance to the original faces, which can enhance the user experience and the realism of the results.
+
+BUSCA TAMBIEN EN ESTE PUNTO SI HAY O EXISTE ALGUNA HERRAMIENTA GENERATIVA DE DEEP LEARNING QUE TENGA EN CONSIDERACION EL CONTORNO DE LA CARA.  SI NO HAY NINGUNA ES UN GOLAZO, PORQUE DE ESO SE TRATA ESTE PAPER.
+
+ACA ES EL PUNTO JUSTO PARA INTRODUCIR STYLEGAN COMO UNA HERRAMIENTA REVOLUCIONARIA PARA LA GENERACION Y EDICION DE CARAS.  UNA VEZ QUE INTRODUCIS STYLEGAN AHI LO CONECTAS CON QUE FUE POCO EXPLORADO DESDE LA PERSPECTIVA DE MODIFICACION DE CARAS PRESERVANDO EL CONTORNO.
+
 However, despite their importance, the relationship between the face frame and the latent space of StyleGAN~\cite{stylegan1}~\cite{stylegan2}, a state-of-the-art generative model for creating realistic images, has received little attention so far. In this paper, we aim to address this by exploring the latent space of StyleGAN to preserve the face frame when manipulating the generated images. Specifically, we propose a post-processing step that modifies the generated images to enhance the preservation of the face frame.
+
+HAY QUE EXPLICAR UN POCO QUE OTRAS HERRAMIENTAS EXISTEN PARA ESO Y PORQUE SE ELIGEN LAS QUE SE ELIGEN.
 
 To do this, we will take advantage of existing neural networks that segments images in three classes: face, hair and background, and use its output to measure the difference of face frame between two images. Using this measurement as a loss function, an algorithm can move through the latent space minimizing the face frame difference.
 
 We analyze how effective is the proposed correction of the face frame for the projection operation and when moving through latent directions. The results show that the method can reduce the face frame difference by a considerable amount.
+
+
+Aca va la parte de las contribuciones de este trabajo.  Es se arma como un mix entre lo que ustedes contribuyen de manera directa en su PF, cruzandolo contra lo que hay poca informacion en la literatura.  Por ejemplo, el tema de que ustedes proponen que es "Face Frame", una definición concreta, que en su PF ustedes lo hacen porque lo necesitan, es algo EXCELENTE SI NUNCA NADIE LO HIZO.
+
+Y asi.  Las contribuciones se ponen como algo asi
+
+The contributions of this work are: (1) definition of a face frame, (2) a method to quantify it, and a proposal to use a realistic  deep learning generative model to generate it. 
 
 The paper is organised as follows. Section \ref{subsection:face_frame_difference_measurement} describes how we classify the pixels of the image into hair, face and background. Section \ref{subsection:face_frame_difference_formula} defines the function that the algorithm use to measure the face frame difference between two images. Section \ref{subsection:face_frame_correction_algorithm} describes the post-processing step that preserves the face frame of the original image. The results and their discussion are presented in Section \ref{section:results}. Section \ref{section:conclusions} concludes the paper.
 
 \section{Materials and Methods}\label{section:materials_and_methods}
 \subsection{Face frame difference measurement}\label{subsection:face_frame_difference_measurement}
 
-There is no standardized way of defining a face frame. We define it as the set of characteristics of a face that gives context for the internal characteristics of such face. A face frame includes the contour of the face, hair, ears. A face frame does not include eyes, mouth, nose or eyebrows. For example, Figure \ref{fig:faceframe} shows two faces with the same frame.
+There is no standardized way of defining a face frame. 
+
+ENTONCES ACA LO DEFINIS VOS !!!!!!!!!!  DEFINILO DIRECTAMENTE TAL CUAL LO HICIERON USTEDES Y ESO SE TRANSFORMA EN UNA CONTRIBUCION DEL PAPER
+
+We define it as the set of characteristics of a face that gives context for the internal characteristics of such face. A face frame includes the contour of the face, hair, ears. A face frame does not include eyes, mouth, nose or eyebrows. For example, Figure \ref{fig:faceframe} shows two faces with the same frame.
 
 \begin{figure}[H]
   \includegraphics[width=0.5\textwidth, center]{Images/face_frame.png}
@@ -107,6 +127,9 @@ Having this in mind, we measure the variation of the face frame between two imag
 \subsubsection{Image segmentation}
 The first thing we need to do is to identify the face and hair inside an arbitrary image. This consists of a simple segmentation problem, separate the pixels of an image in three groups: face, hair and background. For this, an open-source pretrained neural network is used~\citep{segmentationgithub}. This network proved to give satisfying results for different faces and images with different conditions. This is essential for the measurement because there is no need to modify any parameters for different images. In Figure \ref{fig:segmentation}, we can see some examples of segmentation made by this network. In yellow the pixels classified as hair; in blue the pixels classified as face; and in purple the pixels classified as background.
 
+
+ESTO VA COMO RESULTADO.  EN MATERIALES Y METODOS ES TIPO UNA RECETA DE COCINA PARA QUE SE PUEDA REPLICAR.
+
 \begin{figure}[H]
   \includegraphics[width=\linewidth, center]{Images/segmentation.png}
   \caption{Segmentation made by the neural network.~\citep{segmentationgithub}}
@@ -115,6 +138,9 @@ The first thing we need to do is to identify the face and hair inside an arbitra
 
 \subsection{Face frame difference formula}
 \label{subsection:face_frame_difference_formula}
+
+ESTO ENTONCES QUEDA COMO PARTE DE LA DEFINICION QUE HACES ARRIBA DEL FRAME CONTOUR.
+
 Once each pixel of each of the two images is classified, we compare the classifications between the pixels in the same position of the two images. Let $f$ be a function that compares the classifications of two pixels,
 \begin{equation}
 f(c_1, c_2) = 
@@ -140,15 +166,21 @@ This function yields a percentage of the images that is classified differently, 
 
 \subsection{Face frame correction algorithm}\label{subsection:face_frame_correction_algorithm}
 
-To try to obtain results with the least variation of face frame as possible, we move in the surroundings of the latent space of the original face and minimize the function defined in \ref{subsection:face_frame_difference_formula}. 
+To try to obtain results with the least variation of face frame as possible, we PROPOSE AN ALGORITHM TO move around the surroundings of the latent space of the original face to minimize the function defined in \ref{subsection:face_frame_difference_formula}. 
 
-The whole algorithm is very similar to the projection algorithm designed for StyleGAN2~\citep{stylegangithub}. The correction takes the target image and a latent code (usually output of projection or result of moving through latent direction) as its input. First, it calculates the standard deviation of 10000 random latent codes that create realistic images, which allows us to apply noise to the original latent code in a way that we can be certain it will yield a realistic image. The $f(target image, G(initial latent code))$ is also calculated and stored in this first step. The noise strength in each iteration is the result of applying the following formula:
+The whole algorithm is very similar to the projection algorithm designed for StyleGAN2~\citep{stylegangithub}. FIJATE ACA SI HAY ALGUN PAPER QUE TAMBIEN TRABAJE CON ESTE ALGORITMO MAS ALLA DEL DE STYLEGAN2.  The correction takes the target image and a latent code (usually output of projection or result of moving through latent direction) as its input. First, it calculates the standard deviation of 10000 random latent codes that create realistic images, which allows us to apply noise to the original latent code in a way that we can be certain it will yield a realistic image. The $f(target image, G(initial latent code))$ is also calculated and stored in this first step. The noise strength in each iteration is the result of applying the following formula:
+
+CAMBIA LAS VARIABLES PARA QUE SEAN LETRAS Y NO NOMBRES LARGOS.  LAS LETRAS LAS DEFINIS VOS SIN PROBLEMA.
+
+
 \begin{equation}
 strength(i) = l_{std} * noise_0 * (\frac{1-\frac{i}{10000}}{nrl}) ^{2}
 \end{equation}
 Being $i$ the current iteration number, $l_{std}$ the standard deviation of the latent codes previously mentioned, $noise_0$ a constant representing the initial noise factor, and $nrl$ a constant representing the noise ramp length. In these experiments, the values are $noise_0 = 0.005$ and $nrl = 0.75$, which follow what StyleGAN2 uses \citep{stylegangithub}.
 
 Throughout every of the $n$ iterations, the algorithm introduces a Gaussian noise multiplied by $strength(i)$ to the latent code. If this new latent code generates an image with less face-frame variation than the previous latent code, then this new one is stored and used as the current latent code. If that is not the case, the original is preserved. In Figure \ref{fig:correction_demo}, we can see an example of a target face being projected into the latent space as it outputs the neural network and another one after applying the correction algorithm.
+
+LAS FIGURAS CON RESULTADOS VAN EN RESULTADOS
 
 \begin{figure}[H]
   \includegraphics[width=0.5\linewidth, center]{Images/750.jpeg}
@@ -242,11 +274,16 @@ Figure \ref{fig:graph_means} shows that the face frame difference is directly pr
 
 \section{Conclusions}\label{section:conclusions}
 
+ALGO IMPORTANTE DE CONCLUSIONES ES PRIMERO DESTACAR CUAL ES LA EVIDENCIA QUE USTEDES PRESENTAN EN EL PAPER PARA DEMOSTRAR QUE LAS CONTRIBUCIONES QUE DICEN HACER, REALMENTE LAS HACEN, Y PARA CONFIRMAR CUAL ES LA EVIDENCIA DE QUE EL OBJETIVO QUE ESTABLECEN EN LA INTRODUCCION Y EN EL TITULO REALMENTE SE CUMPLIO.
+
 The proposed algorithm proved to be useful when trying to project a target image generating a new one which is not only similar to the original one in terms of facial characteristics, but it also keeps most the facial frame as much as possible.
 
 The face frame difference seems to increase with the magnitude of the movement through any of the studied directions in a linear way. However, the rate of such variation is different for each direction. Indicating that there are features that have a bigger influence in the face frame than others according to the neural network model.
 
 The proposed work is a step toward better perceived quality in face editing techniques with StyleGAN and the better understanding of the latent space.
+
+FALTAN MUCHAS MAS REFERENCIAS !!!!
+
 
 \bibliography{styleganfaceframe}
 
